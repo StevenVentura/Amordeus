@@ -110,7 +110,12 @@ console.log("ffsplease is nextline" );
     //IT WORKS! but it wont launc the fucking chromedriver now (probably duplicate process but like i cant even detect)
 var spaceindex  = ffsplease.indexOf(" ");
 var pokemonsname = ffsplease.substring(0,spaceindex);
-msg.channel.send("<@123995901105537024>" + ffsplease);
+var urlomfg = null;
+driver.getCurrentUrl().then(function(isthisactuallynecessary) {
+urlomfg = isthisactuallynecessary;
+msg.channel.send("<@123995901105537024>" + ffsplease + " ||| " + urlomfg);
+});
+//msg.channel.send("<@123995901105537024>" + ffsplease + " ||| " + urlomfg);
 
 
 });
@@ -140,6 +145,12 @@ return text;
 }
 var xxx = 0;
 client.on('message', msg => {
+
+    if (msg.content && msg.content.startsWith("reverse")) {
+        var splitbtwe = msg.content.split(" ");
+        
+        getPokemon("https://images.google.com/searchbyimage?image_url=" + splitbtwe[1],msg)
+    }
     console.log(++xxx);
     console.log(msg.content);
     if (msg.embeds) {
