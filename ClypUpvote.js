@@ -23,7 +23,7 @@ chrome.setDefaultService(service);
 console.log("??");
 
 //var goldchannelurl = "https://discordapp.com/channels/333767561122676736/442953339945091072";
-var channel_A_URL = "https://clyp.it/#signup";
+var channel_A_URL = "https://clyp.it/1mosggki#signup";
 
 
 
@@ -31,7 +31,8 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-async function createClypAccount(i) {
+async function createClypAccount() {
+    for (var i = 0; i < 3; i++) {
     var driver = new webdriver.Builder()
     //.withCapabilities(chromeCapabilities)
     .withCapabilities(webdriver.Capabilities.chrome())
@@ -73,8 +74,16 @@ if (breakvar == false) {
     console.log("we good. creating account " + emailcount);
 }
 }
+await sleep(1500);
+var upvotebutton = await driver.wait(webdriver.until.elementLocated(webdriver.By.className("button secondary vote-button")),8666).then(async function (buttonboy) {
+    console.log("buttonboy:");
+    console.log(buttonboy);
+    buttonboy.click();
+}, async function (errorboy) {console.log("errorboy:");console.log(errorboy);});
 
+await sleep(4500);
 
+driver.close();
 
 
 
@@ -84,11 +93,12 @@ if (breakvar == false) {
 //"https://discordapp.com/channels/333767561122676736/442953339945091072"
 
 }
+}
 
 
-var emailcount = 42;
+var emailcount = 66;
 
-for (var i = 0; i < 1; i++)
-   createClypAccount(i);
+
+   createClypAccount();
     
 
