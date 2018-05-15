@@ -27,7 +27,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-async function getbotbtw() {
+async function getbotbtw(i) {
     var driver = new webdriver.Builder()
     //.withCapabilities(chromeCapabilities)
     .withCapabilities(webdriver.Capabilities.chrome())
@@ -35,10 +35,24 @@ async function getbotbtw() {
 
     driver.get(goldchannelurl);
 
+
+/*
+sometimes it does a different page on login.
+xpath is : 
+email field:
+/html/body/div[1]/div[1]/div/div[2]/div/form/div/div[3]/div[1]/div/input
+password field:
+/html/body/div[1]/div[1]/div/div[2]/div/form/div/div[3]/div[2]/div/input
+login button:
+/html/body/div[1]/div[1]/div/div[2]/div/form/div/div[3]/button[2]
+*/
+
 //await sleep(10666);
 console.log("wiating...");
 //https://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/until.html
-var query = await driver.wait(webdriver.until.elementLocated(webdriver.By.id("register-email")), 30000);
+var query = await driver.wait(webdriver.until.elementLocated(webdriver.By.id("register-email")), 300000);
+
+
 query.sendKeys("gangsthurh@gmail.com");
 console.log("FINISHED WAITING!");
     //var emailfield = await driver.findElement(webdriver.By.id("register-email"));//driver.findElement(webdriver.By.xpath("//*[@id=\"register-email\"]"));
@@ -49,7 +63,88 @@ console.log("FINISHED WAITING!");
     var loginbutton = driver.findElement(webdriver.By.xpath("/html/body/div[1]/div[1]/div/div[5]/div/form/button"));
     loginbutton.click();
 
-    driver.get(goldchannelurl);
+console.log("Waiting for user to mouse over to the kike-gold channel");
+//"https://discordapp.com/channels/333767561122676736/442953339945091072"
+await driver.wait(function() {
+ return driver.getCurrentUrl().then(function(url) {
+    return url === "https://discordapp.com/channels/333767561122676736/442953339945091072";
+ });   
+}, 1000000);
+console.log("The URL is set. now waiting 3 seconds");
+await sleep(3000);
+console.log("Done waiting 3 seconds");
+var spambox = driver.findElement(webdriver.By.xpath("/html/body/div[1]/div[1]/div/div[1]/div/div/div[2]/div[2]/div[2]/div[2]/div[1]/form/div/div/textarea"));
+
+/*
+get the thing
+scroller-2FKFPG scroller-2v3d_F
+var x = document.getElementsByClassName("scroller-2FKFPG scroller-2v3d_F")[0]
+
+*/
+
+/*var scroller = driver.findElement(webdriver.By.className("scroller-2FKFPG scroller-2v3d_F"));
+scroller.children*/
+
+
+var textboxmaybe = driver.findElement(webdriver.By.className("textAreaEnabled-3vQ5WZ textArea-2Spzkt textArea-2Spzkt scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9"));
+
+textboxmaybe.sendKeys("Brasil");
+
+
+
+
+
+
+/*
+this works:
+var d = document.getElementsByClassName("nameDefaultVoice-3WUH7s name-3M0b8v overflowEllipsis-jeThUf");
+d.click();
+nameDefaultVoice-3WUH7s name-3M0b8v overflowEllipsis-jeThUf
+*/
+var chatsToClickOn = [
+    driver.findElement(webdriver.By.xpath("/html/body/div[1]/div[1]/div/div[1]/div/div/div[2]/div[2]/div[1]/div[1]/div[4]/div/div[2]/div[8]/div[1]/div/div[2]")),
+    driver.findElement(webdriver.By.xpath("/html/body/div[1]/div[1]/div/div[1]/div/div/div[2]/div[2]/div[1]/div[1]/div[4]/div/div[2]/div[9]/div/div/div[2]")),
+    driver.findElement(webdriver.By.xpath("/html/body/div[1]/div[1]/div/div[1]/div/div/div[2]/div[2]/div[1]/div[1]/div[4]/div/div[2]/div[11]/div/div/div[2]")),
+    driver.findElement(webdriver.By.xpath("/html/body/div[1]/div[1]/div/div[1]/div/div/div[2]/div[2]/div[1]/div[1]/div[4]/div/div[2]/div[12]/div/div/div[2]"))
+];
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+function randomWord(length) {
+    
+var outvar = "";
+var alphabet = "abcdefghijklmnopqrstuvwxyz";
+for (var c = 0; c < length; c++) {
+    var indiee = getRandomInt(26);
+outvar = outvar + alphabet.substring(indiee,indiee+1);
+
+}
+return outvar;
+
+}
+
+var clickindex = 0;
+while (true)
+ {
+
+await sleep(100);
+clickindex++;
+//if (typeof(chatsToClickOn)=="undefined")
+chatsToClickOn[clickindex%4].click();
+
+
+//spambox.sendKeys(randomWord(4 + getRandomInt(12)) + "\n");
+
+
+
+}
+
+
+
+
+
+
   
 /*selenium = require ('selenium-webdriver');
 driver = new selenium.Builder()
@@ -134,7 +229,7 @@ passwordfield.sendKeys("s0134201342");
 
 }
 
-for (var i = 0; i < 5; i++)
-    getbotbtw();
+for (var i = 0+1; i < 1+1; i++)
+    getbotbtw(i);
     
 

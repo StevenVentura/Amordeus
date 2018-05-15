@@ -51,6 +51,7 @@ login button:
 */
 
 //await sleep(10666);
+//var usernames = {"gangsthurh@gmail.com",}
 console.log("wiating...");
 //https://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/until.html
 var query = await driver.wait(webdriver.until.elementLocated(webdriver.By.id("register-email")), 300000);

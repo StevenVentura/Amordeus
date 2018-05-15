@@ -4,6 +4,7 @@ const client = new Client({disableEveryone: true});
 
 client.on('ready', () => {
     console.log("Heyo guys, amordeus here");
+    
 });
 
 const botcommandChannel = '333767561122676736';
@@ -29,7 +30,6 @@ chromeCapabilities.set('chromeOptions', {args: ['--headless']});
 
 var service = new chrome.ServiceBuilder(path).build();
 chrome.setDefaultService(service);
-
 
 
 
@@ -143,6 +143,124 @@ return text;
 
 
 }
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  async function scanYLYLThread(ylylID,userboy) {
+    var driver = new webdriver.Builder()
+    //.withCapabilities(chromeCapabilities)
+    .withCapabilities(webdriver.Capabilities.chrome())
+    .build();
+    
+driver.get("http://boards.4chan.org/b/thread/" + ylylID);
+
+/*
+print out all of the URLs of the images in the thread.
+
+*/
+
+await driver.findElement(webdriver.By.className("fileThumb"));
+await sleep(888);
+
+/*
+scan through all of the reply posts.
+all replies with images are important.
+
+*/
+
+/*
+var x = document.getElementsByClassName("post reply")
+
+*/
+
+/*
+executeScript: return all URLs of images from posts.
+*/
+driver.executeScript("var x = document.getElementsByClassName('post reply'); var imageLinkArray = []; for (var i = 0; i < x.length; i++) {var y = x[i].getElementsByClassName('fileThumb'); for (var c = 0; c < y.length; c++) {imageLinkArray.push(y[c].href)} } return imageLinkArray;").then(
+function(YLYLimagesLinksArray){
+YLYLimagesLinksArray.forEach(function (imageLink) {
+console.log("le funny image can be found at " + imageLink);
+userboy.send(imageLink);
+
+},function(err2) {})
+
+
+},function(err1) {console.log("err1 in ylylimageslinkarray btw")}
+);
+
+
+
+  }
+async function getDegeneracyYLYL(userboy) {
+    var driver = new webdriver.Builder()
+    //.withCapabilities(chromeCapabilities)
+    .withCapabilities(webdriver.Capabilities.chrome())
+    .build();
+    
+driver.get("http://boards.4chan.org/b/catalog");
+
+/*
+var x = document.getElementsByClassName("teaser");
+x[1].textContent
+*/
+
+/*driver.findElements(webdriver.By.className("thread")).then(function (threads) {
+
+},function(err2){});
+*/
+console.log("???");
+await driver.findElements(webdriver.By.className("thread"));
+await sleep(888);
+
+
+
+driver.executeScript("var threads = document.getElementsByClassName('thread'); var outarray = []; for (var i = 0; i < threads.length; i++) { if (threads[i].getElementsByClassName('teaser')[0].textContent.match(/ylyl/i)) outarray.push(threads[i].id) } return outarray").then(
+ function (arraynames) {
+    arraynames.forEach(function (untrimmedName) {
+        //returns untrimmedName e.g. "thread-768660429"
+        var ylylthreadid = untrimmedName.substring(untrimmedName.indexOf('-')+1);
+        console.log("ylylthreadid is " + ylylthreadid);
+        scanYLYLThread(ylylthreadid,userboy);
+
+    },function (err2){})
+
+ },function(err1){}   
+);
+
+
+/*driver.executeScript("return document.getElementsByClassName('thread')").then(function (threads) {
+    threads.forEach(function (thread) {
+        console.log("thread is nl " );
+        console.log(thread);
+
+    },function( err2){});
+
+
+},function (err1){console.log("err1 btw" + err1)});
+*/
+
+
+/*driver.findElements(webdriver.By.className("teaser")).then(function (threads) {
+    var count = 0;
+    threads.forEach(function (thread) {
+    
+    //console.log(thread.getText());
+    
+    thread.getText().then(function (text) {
+        if (text.match(/ylyl/i)) {
+            console.log(++count + "Found thread: " + text);
+        }
+
+    },function (err3){});
+
+   },function (fail2){});
+    
+},function (fail1) {});;
+*/
+
+
+
+}
 var xxx = 0;
 client.on('message', msg => {
 
@@ -180,7 +298,7 @@ client.on('message', msg => {
        msg.embeds.forEach(function (mEmbed) {
             if (mEmbed.image) {
                 var s2 = mEmbed.image.url;
-                if (s2.includes("www.pokecord.com")) {
+               if (s2.includes("PokecordSpawn")) {// if (s2.includes("www.pokecord.com")) {
 //its a pokemon link so put it into google images
     //https://images.google.com/searchbyimage?image_url=
     var preboy = "https://images.google.com/searchbyimage?image_url=";
@@ -205,6 +323,13 @@ var postboy = s2;
        }
        }
     );
+   }
+
+   if (s.match(/ylylspam/i) && msg.channel === client.channels.get('377947481096323072')) {
+msg.channel.send("prepare for spam buddy :^)");
+getDegeneracyYLYL(msg.author);
+
+
    }
    if (s.match(/heyo guys/i)) {
         msg.channel.send('amordeus here');
