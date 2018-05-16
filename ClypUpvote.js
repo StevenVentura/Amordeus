@@ -23,7 +23,7 @@ chrome.setDefaultService(service);
 console.log("??");
 
 //var goldchannelurl = "https://discordapp.com/channels/333767561122676736/442953339945091072";
-var channel_A_URL = "https://clyp.it/1mosggki#signup";
+var channel_A_URL = "https://clyp.it/uz2bpdum#signup";
 
 
 
@@ -31,8 +31,9 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-async function createClypAccount() {
-    for (var i = 0; i < 3; i++) {
+async function createClypAccount(threadIndex) {
+    var emailcount = 0;
+    while (true) {
     var driver = new webdriver.Builder()
     //.withCapabilities(chromeCapabilities)
     .withCapabilities(webdriver.Capabilities.chrome())
@@ -46,7 +47,7 @@ console.log("page loaded.");
 var usernamefield = driver.findElement(webdriver.By.xpath("/html/body/div[6]/div/input[1]"));
 usernamefield.sendKeys("Steven Ventura");
 var emailfield = driver.findElement(webdriver.By.xpath("/html/body/div[6]/div/input[2]"));
-emailfield.sendKeys(emailcount + "stevenventura@gmail.com");
+emailfield.sendKeys(emailcount + "stevenventura" + threadIndex + "@gmail.com");
 var passwordfield = driver.findElement(webdriver.By.xpath("/html/body/div[6]/div/input[3]"));
 passwordfield.sendKeys("0134201342");
 var submitbutton = driver.findElement(webdriver.By.xpath("/html/body/div[6]/div/a"));
@@ -61,7 +62,7 @@ var errorbox = await driver.wait(webdriver.until.elementLocated(webdriver.By.cla
     await emailfield.click().then(function (succ2) {}, function (err3) {console.log(err3);breakvar = false;});
     await emailfield.clear().then(function (succ3) {}, function (err4) {console.log(err4);breakvar = false;});
     emailcount++;
-    await emailfield.sendKeys(emailcount + "stevenventura@gmail.com").then(function(succ4) {}, function (err5) {console.log(err5);breakvar = false;});
+    await emailfield.sendKeys(emailcount + "stevenventura" + threadIndex + "@gmail.com").then(function(succ4) {}, function (err5) {console.log(err5);breakvar = false;});
     await submitbutton.click().then(function (succ) {}, function (err2) {console.log(err2);breakvar = false;});
     
 },async function (err1) {console.log(err1);
@@ -78,7 +79,8 @@ await sleep(1500);
 var upvotebutton = await driver.wait(webdriver.until.elementLocated(webdriver.By.className("button secondary vote-button")),8666).then(async function (buttonboy) {
     console.log("buttonboy:");
     console.log(buttonboy);
-    buttonboy.click();
+    buttonboy.click().then(function succ(succfunc){},
+    function err(errfunc){}) ;
 }, async function (errorboy) {console.log("errorboy:");console.log(errorboy);});
 
 await sleep(4500);
@@ -95,10 +97,11 @@ driver.close();
 }
 }
 
+//101stevenventura1@gmail.com
+//1stevenventura2@gmail.com
 
-var emailcount = 66;
 
-
-   createClypAccount();
+for (var i = 1; i <= 10; i++)
+   createClypAccount(i);
     
 
