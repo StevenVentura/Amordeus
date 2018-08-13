@@ -1,0 +1,35 @@
+{
+  "name": "amordeus",
+  "version": "0.1.0",
+  "description": "henlo world",
+  "main": "Amordeus.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "heyo",
+    "guys"
+  ],
+  "author": "Gangsthurh",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^1.10.0",
+    "chai-as-promised": "^4.1.1",
+    "child_process": "^1.0.2",
+    "chromedriver": "^2.36.0",
+    "coffee-script": "^1.12.7",
+    "discord.js": "github:hydrabolt/discord.js",
+    "ffmpeg": "0.0.4",
+    "get-latest": "^0.1.0",
+    "jquery": "^3.3.1",
+    "jsdom": "^11.10.0",
+    "mocha": "^2.0.1",
+    "node-opus": "^0.3.0",
+    "npm": "^6.0.0",
+    "opusscript": "0.0.6",
+    "say": "^0.15.0",
+    "selenium-webdriver": "^2.53.3",
+    "speak-tts": "^1.1.0",
+    "webdriverjs": "^1.7.5"
+  }
+}

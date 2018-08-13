@@ -175,8 +175,17 @@ var x = document.getElementsByClassName("post reply")
 
 /*
 executeScript: return all URLs of images from posts.
+
+executeScript: return all posts that match the criteria:
+1) 4+ replies
+2) comment that says "lost" or "sides"
+
+backLink
+
+
 */
-driver.executeScript("var x = document.getElementsByClassName('post reply'); var imageLinkArray = []; for (var i = 0; i < x.length; i++) {var y = x[i].getElementsByClassName('fileThumb'); for (var c = 0; c < y.length; c++) {imageLinkArray.push(y[c].href)} } return imageLinkArray;").then(
+
+driver.executeScript("var x = document.getElementsByClassName('post reply'); var imageLinkArray = []; for (var i = 0; i < x.length; i++) {var y = x[i].getElementsByClassName('fileThumb'); if (x[i].getElementsByClassName('quotelink').length >= 4) for (var c = 0; c < y.length; c++) {imageLinkArray.push(y[c].href)} } return imageLinkArray;").then(
 function(YLYLimagesLinksArray){
 YLYLimagesLinksArray.forEach(function (imageLink) {
 console.log("le funny image can be found at " + imageLink);

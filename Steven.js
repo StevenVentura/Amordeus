@@ -100,6 +100,20 @@ this works:
 var d = document.getElementsByClassName("nameDefaultVoice-3WUH7s name-3M0b8v overflowEllipsis-jeThUf");
 d.click();
 nameDefaultVoice-3WUH7s name-3M0b8v overflowEllipsis-jeThUf
+
+
+function sleephaha(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+while(true){
+var d = document.getElementsByClassName("nameDefaultVoice-3WUH7s name-3M0b8v overflowEllipsis-jeThUf");
+for (i=0;i<d.length;i++) {
+	try{
+d[i].click();
+await sleephaha(250);
+	}catch(exc){}
+}
+}
 */
 var chatsToClickOn = [
     driver.findElement(webdriver.By.xpath("/html/body/div[1]/div[1]/div/div[1]/div/div/div[2]/div[2]/div[1]/div[1]/div[4]/div/div[2]/div[8]/div[1]/div/div[2]")),

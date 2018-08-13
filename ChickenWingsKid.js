@@ -30,7 +30,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-async function getbotbtw(i) {
+async function getbotbtw(uname, pword) {
     var driver = new webdriver.Builder()
     //.withCapabilities(chromeCapabilities)
     .withCapabilities(webdriver.Capabilities.chrome())
@@ -54,30 +54,47 @@ login button:
 //var usernames = {"gangsthurh@gmail.com",}
 console.log("wiating...");
 //https://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/until.html
-var query = await driver.wait(webdriver.until.elementLocated(webdriver.By.id("register-email")), 300000);
+await driver.wait(webdriver.until.elementLocated(webdriver.By.id("register-email")), 2666).then(function (query) {
+console.log("query is nextlne:");
+console.log(query);
 
-if (i == 0) {
-query.sendKeys("gangsthurh@gmail.com");
-}
-else if (i == 1) {
-    query.sendKeys("gangsth4@gmail.com");
-}
+    query.sendKeys(uname);
+   
+    var passwordfield = driver.findElement(webdriver.By.xpath("//*[@id=\"register-password\"]"));
+   
+        passwordfield.sendKeys(pword);
+    
+    var loginbutton = driver.findElement(webdriver.By.xpath("/html/body/div[1]/div[1]/div/div[5]/div/form/button"));
+    loginbutton.click();
+
+
+},function(erra){console.log("alternate login screen detected."); 
+
+driver.findElements(webdriver.By.className("inputDefault-_djjkz input-cIJ7To size16-14cGz5")).then(function (fields) {
+    var email1 = fields[0];
+email1.sendKeys(uname);
+var password1 = fields[1];
+password1.sendKeys(pword);
+var button = driver.findElement(webdriver.By.className("marginBottom8-AtZOdT button-3k0cO7 button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeLarge-1vSeWK fullWidth-1orjjo grow-q77ONN"));
+button.click();
+});
+
+
+
+
+
+
+});
+
+
+
 console.log("FINISHED WAITING!");
     //var emailfield = await driver.findElement(webdriver.By.id("register-email"));//driver.findElement(webdriver.By.xpath("//*[@id=\"register-email\"]"));
     //await driver.wait(webdriver.until.elementIsVisible(emailfield),100);
     //await emailfield.sendKeys("gangsthurh@gmail.com");
-    var passwordfield = driver.findElement(webdriver.By.xpath("//*[@id=\"register-password\"]"));
-    if (i == 0) {
-    passwordfield.sendKeys("s0134201342");
-    }
-    else if (i == 1)
-    {
-        passwordfield.sendKeys("0134201342");
-    }
-    var loginbutton = driver.findElement(webdriver.By.xpath("/html/body/div[1]/div[1]/div/div[5]/div/form/button"));
-    loginbutton.click();
+    
 
-console.log("Waiting for user to mouse over to the kike-gold channel");
+console.log("Waiting for user to mouse over to the a-gold channel");
 //"https://discordapp.com/channels/333767561122676736/442953339945091072"
 await driver.wait(function() {
  return driver.getCurrentUrl().then(function(url) {
@@ -142,25 +159,50 @@ await sleep(8888);//added this cos it wasnt loading rite xd
 driver.findElement(webdriver.By.className("close-relY5R")).click().then(function () {
 }, function (err){});;
 
+async function clickfailbutton() {
+
+    driver.findElement(webdriver.By.className("primaryButton-2BsGPp button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeXlarge-2yFAlZ grow-q77ONN")).then(
+        async function (_foundbutton) {
+          _foundbutton.click().then(function (onsucc) {},function(onfail){});
+          await sleep(1500);
+        },function (_errnotfound) {}
+       );
+}
+
 var counthaha = 0;
+var thirdpass = -1;
 while (true) {
 
     await sleep(100);
    await driver.findElements(webdriver.By.className("containerDefault-1ZnADq")).then(async function (elements) {
+    thirdpass++;
         elements.forEach(async function (element) {
-          element.click();
-          await driver.findElement(webdriver.By.className("textAreaEnabled-3vQ5WZ textArea-2Spzkt textArea-2Spzkt scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9")).
-          then(async function (haha) {
-              haha.sendKeys(counthaha++ + "\n");
-              await sleep(666);
-              haha.sendKeys(counthaha++ + "\n");
-              await sleep(666);
-              haha.sendKeys(counthaha++ + "\n");
-              await sleep(666);
-              haha.sendKeys(".pick" + "\n");
-              await sleep(500);
-              await sleep(2000);
-          }, function (err3){});
+          element.click().then(async function (_clicked) {
+            await driver.findElement(webdriver.By.className("textAreaEnabled-3vQ5WZ textArea-2Spzkt textArea-2Spzkt scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9")).
+            then(async function (haha) {
+                
+                var stringstosend = [counthaha,counthaha+1,counthaha+2,".pick"];
+              if (thirdpass%2==0)
+              {
+                haha.sendKeys(".pick\n").then(async function (_xd){},async function (keyfailed){});
+                await sleep(333);
+              }
+                else for (var xx = 0; xx < 3; xx++)
+                {    haha.sendKeys(stringstosend[xx] + "\n").then(async function (_xd) { },async function(keyfailed) {
+                    //primaryButton-2BsGPp button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeXlarge-2yFAlZ grow-q77ONN is the "woah there xD button" 
+                    clickfailbutton();
+                });
+                        await sleep(666);
+                }
+                counthaha += 3;
+                await sleep(500);
+               // await sleep(500);
+            }, function (err3){});
+            
+          }, async function (_clickfailed) {
+              clickfailbutton();
+          });
+          
           
       
         }, function (err2) {})  
@@ -222,7 +264,11 @@ s[0].click(); s[1].click();
 
 }
 
-for (var i = 0; i < 2; i++)
-    getbotbtw(i);
+var unames = ["gangsth4@gmail.com","gangsthurh2@gmail.com"];
+var pwords = ["0134201342","0134201342"];
+for (var i = 0; i <= 0; i++)
+{
+    getbotbtw(unames[i],pwords[i]);
+}
     
 
